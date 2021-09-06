@@ -69,10 +69,9 @@ app.delete("/api/thenotes/:id", function(req, res) {
 //When sending data to a web server, the data has to be a string. Convert a JavaScript object into a string with JSON.stringify().
 
 function updatedb() {
-  fs.writeFile("db/db.json",JSON.stringify(thethenotes),err => {
+  fs.writeFile("db/db.json",JSON.stringify(thenotes),err => {
       if (err) throw err;
       return true;
   });
 };
-
 }
