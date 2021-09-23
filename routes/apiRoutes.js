@@ -58,7 +58,7 @@ app.post("/api/notes", function(req, res) {
 //that the server will call when it receives an HTTP GET request to the path and a specific note.
 //The res.json() function sends a JSON response in the form of an object of the specific note.
 //Use req.params.id to capture the object specified at the specific position in the object array.
- 
+ //Reference: https://modernweb.com/the-basics-of-express-routes/
  // (example)
  //Route path: /todos/:id
 //Request URL: http://localhost:xxxx/todos/36
