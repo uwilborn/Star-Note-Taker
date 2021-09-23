@@ -12,7 +12,7 @@ const app = express();
   // In each of the below cases when a user visits a link
   // (ex: localhost:PORT/api/admin... they are shown a JSON of the notes)
   // ---------------------------------------------------------------------------
-//CRUD Methodology
+
 
 module.exports = (app) => {
   
