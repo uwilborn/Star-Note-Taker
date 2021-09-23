@@ -91,3 +91,37 @@ function updatedb() {
   });
 };
 }
+
+//Possible Step (unique id)
+const addId = (id = 1) => {
+   return function recur(thenotes) {
+      if ('title' in thenotes) {
+         thenotes.id = id++;
+      };
+      Object.keys(thenotes).forEach(el => {
+         Array.isArray(thenotes[el]) && thenotes[el].forEach(recur);
+      });
+   };
+}
+const mapId = thenotes => {
+   thenotes.forEach(addId);
+}
+mapId(thenotes);
+console.log(JSON.stringify(thenotes, undefined, 2));
+
+//Original
+//const addId = (id = 1) => {
+ //  return function recur(obj) {
+ //     if ('title' in obj) {
+ //        obj.id = id++;
+ //     };
+ //     Object.keys(obj).forEach(el => {
+ //        Array.isArray(obj[el]) && obj[el].forEach(recur);
+ //     });
+ //  };
+//}
+//const mapId = arr => {
+//   arr.forEach(addId);
+//}
+//mapId(arr);
+//console.log(JSON.stringify(arr, undefined, 4));
