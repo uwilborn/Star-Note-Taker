@@ -79,20 +79,11 @@ app.get("/api/thenotes/:id", function(req,res) {
     console.log("Note Deleted:"+req.params.id);
 });
 
-//STEP 6: (UPDATE) Use fs.writefile(file,contents,error function) to resplace the contents of the db.json file. 
-//When sending data to a web server, the data has to be a string. Convert a JavaScript object into a string with JSON.stringify().
-//Reference: https://heynode.com/tutorial/readwrite-json-files-nodejs/
-//db.json will be overwritten
-  
-function updatedb() {
-  fs.writeFile("db/db.json",JSON.stringify(thenotes),err => {
-      if (err) throw err;
-      return true;
-  });
-};
-}
 
-//Possible Step (unique id)
+  
+  
+ //STEP 6A:(UNIQUE ID)
+ //Possible Step (unique id addition if it works)
 const addId = (id = 1) => {
    return function recur(thenotes) {
       if ('title' in thenotes) {
@@ -108,6 +99,23 @@ const mapId = thenotes => {
 }
 mapId(thenotes);
 console.log(JSON.stringify(thenotes, undefined, 2));
+  
+  
+  
+ //STEP 6: (UPDATE) Use fs.writefile(file,contents,error function) to resplace the contents of the db.json file. 
+//When sending data to a web server, the data has to be a string. Convert a JavaScript object into a string with JSON.stringify().
+//Reference: https://heynode.com/tutorial/readwrite-json-files-nodejs/
+//db.json will be overwritten
+  
+function updatedb() {
+  fs.writeFile("db/db.json",JSON.stringify(thenotes),err => {
+      if (err) throw err;
+      return true;
+  });
+};
+
+//the end
+
 
 //Original
 //const addId = (id = 1) => {
