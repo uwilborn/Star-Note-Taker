@@ -16,8 +16,8 @@ app.use(express.static("public"));
 
 
 // Routes files required used to show what the user will view and where to pull the data from
-require('./routes/apiRoutes')(app);
-require('./routes/htmlRoutes')(app);
+require('./routes/api')(app);
+require('./routes/html')(app);
 
 // Create our server
 const server = http.createServer(handleRequest);
