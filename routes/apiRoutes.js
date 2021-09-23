@@ -2,6 +2,9 @@
 
 const fs = require('fs');
 const path = require('path');
+const express = require('express');
+
+const app = express();
 
 // ROUTING
 // API GET Requests
@@ -29,6 +32,7 @@ module.exports = (app) => {
 //STEP 2: Use express method app.get() method to define a route handler 
 //that the server will call when it receives an HTTP GET request to the path.
 //The res.json() function sends a JSON response in the form of an object.
+//Requirement: GET /api/notes should read the db.json file and return all saved notes as JSON.
 
 
    app.get("/api/notes", function(req, res) {
@@ -39,6 +43,8 @@ module.exports = (app) => {
 //request to the specified path with the specified callback functions. To access the parsed request body, use req.body().
 //callback function receives a request of a new note object, adds it to the object array via push array method,
 // then calls the function that will update the json file.Return a confirmation to the user.
+//Requirement: POST /api/notes should receive a new note to save on the request body, add it to the db.json file, 
+//and then return the new note to the client. You'll need to find a way to give each note a unique id when it's saved (look into npm packages that could do this for you).
 
 app.post("/api/notes", function(req, res) {
     
@@ -52,6 +58,11 @@ app.post("/api/notes", function(req, res) {
 //that the server will call when it receives an HTTP GET request to the path and a specific note.
 //The res.json() function sends a JSON response in the form of an object of the specific note.
 //Use req.params.id to capture the object specified at the specific position in the object array.
+ 
+ // (example)
+ //Route path: /todos/:id
+//Request URL: http://localhost:xxxx/todos/36
+//req.params: { "id": "36" }
 
 app.get("/api/thenotes/:id", function(req,res) {
     // display json for the thenotes array indices of the provided id
@@ -59,7 +70,10 @@ app.get("/api/thenotes/:id", function(req,res) {
 });
 
 // STEP 5: (DELETE) Use  express method to delete a note with specific object id
-app.delete("/api/thenotes/:id", function(req, res) {
+//DELETE /api/notes/:id should receive a query parameter containing the id of a note to delete. 
+//In order to delete a note, you'll need to read all notes from the db.json file, remove the note with the given id property, and then rewrite the notes to the db.json file.
+
+  app.delete("/api/thenotes/:id", function(req, res) {
     thenotes.splice(req.params.id, 1);
     updatedb();
     console.log("Note Deleted:"+req.params.id);
