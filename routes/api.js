@@ -21,7 +21,7 @@ module.exports = (app) => {
 //Parse the data with JSON.parse(), and the data becomes a JavaScript object.
 
 
-  fs.readFile("db/db.json", (err, data) => {
+  fs.readFile("Develop/db/db.json", (err, data) => {
 
     if (err) throw err;
 
@@ -97,9 +97,9 @@ const addId = (id = 1) => {
 const mapId = thenotes => {
    thenotes.forEach(addId);
 }
-mapId(thenotes);
-console.log(JSON.stringify(thenotes, undefined, 2));
-  
+// mapId(thenotes);
+// console.log(JSON.stringify(thenotes, undefined, 2));
+} 
   
   
  //STEP 6: (UPDATE) Use fs.writefile(file,contents,error function) to resplace the contents of the db.json file. 
@@ -132,4 +132,4 @@ function updatedb() {
 //   arr.forEach(addId);
 //}
 //mapId(arr);
-//console.log(JSON.stringify(arr, undefined, 4));
+//console.log(JSON.stringify(arr, undefined, 4))

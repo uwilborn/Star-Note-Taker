@@ -20,7 +20,7 @@ require('./routes/api')(app);
 require('./routes/html')(app);
 
 // Create our server
-const server = http.createServer(handleRequest);
+// const server = http.createServer(handleRequest);
 
 // Starts the server to begin listening
 app.listen(PORT, () => console.log(`App listening on PORT ${PORT}`));
