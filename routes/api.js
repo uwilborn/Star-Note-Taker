@@ -12,21 +12,21 @@ const app = express();
   // In each of the below cases when a user visits a link
   // (ex: localhost:PORT/api/admin... they are shown a JSON of the notes)
   // ---------------------------------------------------------------------------
-
+  let notes
 
 module.exports = (app) => {
   
 //STEP 1: Use fs.readFile(file, error function) to read the db.json and return the contents.
 //When receiving data from a web server, the data is always a string.
 //Parse the data with JSON.parse(), and the data becomes a JavaScript object.
-
+let notes
 
   fs.readFile("Develop/db/db.json", (err, data) => {
 
     if (err) throw err;
 
-    var thenotes = JSON.parse(data);
-    return thenotes;
+    notes = JSON.parse(data);
+    return notes;
   });
 
 //STEP 2: Use express method app.get() method to define a route handler 
@@ -36,7 +36,7 @@ module.exports = (app) => {
 
 
    app.get("/api/notes", function(req, res) {
-   res.json(thenotes);
+   res.json(notes);
 });
 
 //STEP 3: Use express method app.post(path, callback function) to route the HTTP POST 
@@ -49,7 +49,7 @@ module.exports = (app) => {
 app.post("/api/notes", function(req, res) {
     
     let newNote = req.body;
-    thenotes.push(newNote);
+    notes.push(newNote);
     updatedb();
     return console.log("Note Added:"+newNote.title);
 });
@@ -64,17 +64,17 @@ app.post("/api/notes", function(req, res) {
 //Request URL: http://localhost:xxxx/todos/36
 //req.params: { "id": "36" }
 
-app.get("/api/thenotes/:id", function(req,res) {
+app.get("/api/notes/:id", function(req,res) {
     // display json for the thenotes array indices of the provided id
-    res.json(thenotes[req.params.id]);
+    res.json(notes[req.params.id]);
 });
 
 // STEP 5: (DELETE) Use  express method to delete a note with specific object id
 //DELETE /api/notes/:id should receive a query parameter containing the id of a note to delete. 
 //In order to delete a note, you'll need to read all notes from the db.json file, remove the note with the given id property, and then rewrite the notes to the db.json file.
 
-  app.delete("/api/thenotes/:id", function(req, res) {
-    thenotes.splice(req.params.id, 1);
+  app.delete("/api/notes/:id", function(req, res) {
+    notes.splice(req.params.id, 1);
     updatedb();
     console.log("Note Deleted:"+req.params.id);
 });
@@ -85,17 +85,17 @@ app.get("/api/thenotes/:id", function(req,res) {
  //STEP 6A:(UNIQUE ID)
  //Possible Step (unique id addition if it works)
 const addId = (id = 1) => {
-   return function recur(thenotes) {
-      if ('title' in thenotes) {
-         thenotes.id = id++;
+   return function recur(notes) {
+      if ('title' in notes) {
+         notes.id = id++;
       };
-      Object.keys(thenotes).forEach(el => {
-         Array.isArray(thenotes[el]) && thenotes[el].forEach(recur);
+      Object.keys(notes).forEach(el => {
+         Array.isArray(notes[el]) && notes[el].forEach(recur);
       });
    };
 }
-const mapId = thenotes => {
-   thenotes.forEach(addId);
+const mapId = notes => {
+   notes.forEach(addId);
 }
 // mapId(thenotes);
 // console.log(JSON.stringify(thenotes, undefined, 2));
@@ -108,7 +108,7 @@ const mapId = thenotes => {
 //db.json will be overwritten
   
 function updatedb() {
-  fs.writeFile("db/db.json",JSON.stringify(thenotes),err => {
+  fs.writeFile("Develop/db/db.json",JSON.stringify(notes),err => {
       if (err) throw err;
       return true;
   });
@@ -118,18 +118,3 @@ function updatedb() {
 
 
 //Original(https://www.tutorialspoint.com/adding-a-unique-id-for-each-entry-in-json-object-in-javascript)
-//const addId = (id = 1) => {
- //  return function recur(obj) {
- //     if ('title' in obj) {
- //        obj.id = id++;
- //     };
- //     Object.keys(obj).forEach(el => {
- //        Array.isArray(obj[el]) && obj[el].forEach(recur);
- //     });
- //  };
-//}
-//const mapId = arr => {
-//   arr.forEach(addId);
-//}
-//mapId(arr);
-//console.log(JSON.stringify(arr, undefined, 4))
